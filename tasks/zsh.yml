@@ -1,0 +1,25 @@
+- name: Check if /opt/homebrew/bin/zsh exists
+  tags: &tags_for_zsh_tasks ["zsh"]
+  stat:
+    path: /opt/homebrew/bin/zsh
+  register: zsh_stat
+
+- name: Fail if zsh is not installed at /opt/homebrew/bin/zsh
+  tags: *tags_for_zsh_tasks
+  fail:
+    msg: "/opt/homebrew/bin/zsh is not installed"
+  when: not zsh_stat.stat.exists
+
+- name: "Change shell to zsh"
+  tags: *tags_for_zsh_tasks
+  shell: "chsh -s /bin/zsh"
+
+- name: "Install oh-my-zsh"
+  tags: *tags_for_zsh_tasks
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+- name: Install zhz-fzf-history-search
+  tags: *tags_for_zsh_tasks
+  ansible.builtin.git:
+    repo: "https://github.com/joshskidmore/zsh-fzf-history-search"
+    dest: "~/.oh-my-zsh/plugins/zsh-fzf-history-search"

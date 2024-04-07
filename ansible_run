@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# read the first argument and if doest not exist, set the default value to 'install'
+if [ "$1" = "" ]; then
+	TAG="install"
+else
+	TAG=$1
+fi
+
+ansible-playbook --tags "$TAG" main.yml

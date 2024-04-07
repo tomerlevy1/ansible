@@ -1,0 +1,10 @@
+---
+- name: "Setup macOS"
+  hosts: localhost
+  tasks:
+    - name: Include vars
+      ansible.builtin.include_vars:
+        file: vars.yml
+    - import_tasks: tasks/homebrew.yml
+    - import_tasks: tasks/tmux.yml
+    - import_tasks: tasks/zsh.yml

@@ -1,0 +1,68 @@
+- name: "Update Homebrew"
+  community.general.homebrew:
+    update_homebrew: true
+    upgrade_all: true
+  tags:
+    - skip
+    - homebrew
+
+- name: "Brew tap casks"
+  # loops through the list and tap to casks
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+  with_items:
+    - homebrew/cask-fonts
+    - koekeishiya/formulae
+    - ngrok/ngrok
+    - FelixKratz/formulae
+  tags:
+    - install
+    - homebrew
+
+- name: "Install casks"
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+    state: "latest"
+  with_items:
+    - font-hack-nerd-font
+    - font-fira-code-nerd-font
+    - ngrok
+    - maccy
+    - alacritty
+    - karabiner-elements
+  tags:
+    - install
+    - homebrew
+
+- name: "Install formulae"
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: "latest"
+  with_items:
+    - tmux
+    - eza
+    - jq
+    - ripgrep
+    - lazygit
+    - git
+    - stow
+    - fnm
+    - tldr
+    - z
+    - neovim
+    - fzf
+    - yabai
+    - skhd
+    - zsh
+    - zsh-history-substring-search
+    - zsh-syntax-highlighting
+    - zsh-autosuggestions
+    - commitizen
+    - sketchybar
+    - less
+    - starship
+    - tree
+
+  tags:
+    - install
+    - homebrew
