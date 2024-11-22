@@ -23,3 +23,9 @@
   ansible.builtin.git:
     repo: "https://github.com/joshskidmore/zsh-fzf-history-search"
     dest: "~/.oh-my-zsh/plugins/zsh-fzf-history-search"
+
+- name: Install evalcache
+  tags: *tags_for_zsh_tasks
+  ansible.builtin.git:
+    repo: "https://github.com/mroth/evalcache"
+    dest: "~/.oh-my-zsh/plugins/evalcache"

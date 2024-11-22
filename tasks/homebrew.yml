@@ -15,6 +15,7 @@
     - koekeishiya/formulae
     - ngrok/ngrok
     - FelixKratz/formulae
+    - espanso/espanso
   tags:
     - install
     - homebrew
@@ -24,12 +25,14 @@
     name: "{{ item }}"
     state: "latest"
   with_items:
-    - font-hack-nerd-font
-    - font-fira-code-nerd-font
+    - font-jetbrains-mono-nerd-font
+    # - font-hack-nerd-font
+    # - font-fira-code-nerd-font
     - ngrok
     - maccy
     - alacritty
     - karabiner-elements
+    - gimp
   tags:
     - install
     - homebrew
@@ -39,30 +42,32 @@
     name: "{{ item }}"
     state: "latest"
   with_items:
-    - tmux
+    - commitizen
+    - espanso
     - eza
-    - jq
-    - ripgrep
-    - lazygit
-    - git
-    - stow
     - fnm
-    - tldr
-    - z
-    - neovim
     - fzf
-    - yabai
+    - gh
+    - git
+    - imagemagick
+    - jq
+    - lazygit
+    - less
+    - neovim
+    - ripgrep
+    - sketchybar
     - skhd
+    - starship
+    - stow
+    - tldr
+    - tmux
+    - tree
+    - yabai
+    - z
     - zsh
+    - zsh-autosuggestions
     - zsh-history-substring-search
     - zsh-syntax-highlighting
-    - zsh-autosuggestions
-    - commitizen
-    - sketchybar
-    - less
-    - starship
-    - tree
-
   tags:
     - install
     - homebrew

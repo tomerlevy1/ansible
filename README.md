@@ -110,7 +110,7 @@ tart delete sonoma-base
 - [ ] need to setup ssh for github
 - [ ] dotfiles - clone and setup
 - [ ] NeoVim setup with dotfiles
-- [ ] gcc@12 brew
+- [ ] gcc@11 brew
 - [ ] lua brew
 - [ ] maven brew 
 - [ ] Docker
