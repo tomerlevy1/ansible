@@ -24,6 +24,7 @@
     name: "{{ item }}"
     state: "latest"
   with_items:
+    - font-jetbrains-mono-nerd-font
     - font-hack-nerd-font
     - font-fira-code-nerd-font
     - ngrok
@@ -62,6 +63,7 @@
     - less
     - starship
     - tree
+    - gh
 
   tags:
     - install
