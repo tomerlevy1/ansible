@@ -26,8 +26,8 @@
 5. **Migrate Ansible Roles to Modules**
     5.1. [x] Create `mac-setup/modules/00_homebrew.sh` to handle Homebrew installation. This module should be idempotent.
     5.2. [x] Create `mac-setup/modules/10_zsh.sh` to install Zsh (no chsh; interactive shell change is deferred).
-    5.3. [ ] Create `mac-setup/modules/20_tmux.sh` to install and configure tmux.
-    5.4. [ ] Ensure each module uses the logging and utility functions from `utils.sh`.
+    5.3. [x] Create `mac-setup/modules/20_tmux.sh` to install and configure tmux.
+    5.4. [x] Ensure each module uses the logging and utility functions from `utils.sh`.
     5.5. [ ] Refactor any interactive steps (e.g., chsh, SSH key generation) out of modules and into the interactive script.
 
 6. **Set Up Configuration Management**
@@ -70,6 +70,7 @@
 - `mac-setup/setup-interactive.sh`: Script for running interactive steps (to be created).
 - `mac-setup/modules/00_homebrew.sh`: Installs Homebrew if not already installed (idempotent).
 - `mac-setup/modules/10_zsh.sh`: Installs Zsh (idempotent, no chsh).
+- `mac-setup/modules/20_tmux.sh`: Installs and configures tmux (idempotent).
 
 ---
 
@@ -88,4 +89,5 @@
 - feat(setup): add --dry-run flag for module execution
 - feat(modules): add idempotent Homebrew installation module
 - feat(modules): add idempotent Zsh installation module (no chsh)
-- feat(setup): add setup-interactive.sh for interactive steps 
+- feat(modules): add idempotent tmux installation module
+- refactor(modules): ensure all modules use utils.sh for logging and checks 
