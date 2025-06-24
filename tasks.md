@@ -15,7 +15,7 @@
 3. **Develop the Main Orchestrator Script**
     3.1. [x] Create the main script `mac-setup/setup.sh`.
     3.2. [x] Implement logic in `setup.sh` to source `lib/utils.sh`.
-    3.3. [ ] Add logic to source `mac-setup/config.sh` if it exists.
+    3.3. [x] Add logic to source `mac-setup/config.sh` if it exists.
     3.4. [ ] Implement module discovery to find all `.sh` files in the `modules/` directory.
     3.5. [ ] Implement the main loop in `setup.sh` to execute the discovered modules in alphabetical order.
 
@@ -72,4 +72,5 @@
 - chore(setup): add initial .gitignore to mac-setup
 - feat(utils): add utils.sh with logging and command_exists helpers
 - feat(setup): create main setup.sh script
-- feat(setup): source lib/utils.sh in setup.sh 
+- feat(setup): source lib/utils.sh in setup.sh
+- feat(setup): source config.sh if it exists in setup.sh 
