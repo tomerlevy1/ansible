@@ -31,7 +31,6 @@ FORMULAE=(
   lazygit
   less
   neovim
-  rg
   ripgrep
   sketchybar
   skhd
