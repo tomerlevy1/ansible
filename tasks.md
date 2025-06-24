@@ -35,7 +35,7 @@
 
 7. **Create Interactive Setup Script** [x]
     7.1. [x] Create `mac-setup/setup-interactive.sh` for all interactive steps (e.g., chsh, SSH key generation).
-    7.2. [ ] Add logic to perform interactive steps with clear user prompts and instructions.
+    7.2. [x] Add logic to perform interactive steps with clear user prompts and instructions.
 
 8. **Create Documentation**
     8.1. [ ] Create a comprehensive `mac-setup/README.md`.
@@ -91,4 +91,5 @@
 - feat(modules): add idempotent Zsh installation module (no chsh)
 - feat(modules): add idempotent tmux installation module
 - refactor(modules): ensure all modules use utils.sh for logging and checks
-- refactor(setup): move interactive steps to setup-interactive.sh 
+- refactor(setup): move interactive steps to setup-interactive.sh
+- feat(setup-interactive): add clear prompts and instructions for interactive steps 
