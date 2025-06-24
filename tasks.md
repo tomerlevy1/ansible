@@ -20,7 +20,7 @@
     3.5. [x] Implement the main loop in `setup.sh` to execute the discovered modules in alphabetical order.
 
 4. **Implement Feature Flags**
-    4.1. [ ] Add argument parsing to `setup.sh` for selective module execution (e.g., `./setup.sh tmux`).
+    4.1. [x] Add argument parsing to `setup.sh` for selective module execution (e.g., `./setup.sh tmux`).
     4.2. [ ] Implement the `--dry-run` flag to show what commands would be executed.
 
 5. **Migrate Ansible Roles to Modules**
@@ -75,4 +75,5 @@
 - feat(setup): source lib/utils.sh in setup.sh
 - feat(setup): source config.sh if it exists in setup.sh
 - feat(setup): discover modules in modules directory
-- feat(setup): execute modules in main loop 
+- feat(setup): execute modules in main loop
+- feat(setup): add selective module execution via arguments 
