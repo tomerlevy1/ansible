@@ -25,4 +25,16 @@ else
   log_error "Modules directory not found: $MODULES_DIR"
 fi
 
+# Execute each module script in order
+for module in "${MODULE_SCRIPTS[@]}"; do
+  log_info "Running module: $(basename "$module")"
+  if bash "$module"; then
+    log_success "Module succeeded: $(basename "$module")"
+  else
+    log_error "Module failed: $(basename "$module")"
+    exit 1
+  fi
+  echo
+done
+
 # Further logic will be added in subsequent steps. 

@@ -12,12 +12,12 @@
     2.2. [x] Add colored logging functions (`log_info`, `log_success`, `log_error`) to `utils.sh`.
     2.3. [x] Add a helper function to check for the existence of a command (e.g., `command_exists`).
 
-3. **Develop the Main Orchestrator Script**
+3. **Develop the Main Orchestrator Script** [x]
     3.1. [x] Create the main script `mac-setup/setup.sh`.
     3.2. [x] Implement logic in `setup.sh` to source `lib/utils.sh`.
     3.3. [x] Add logic to source `mac-setup/config.sh` if it exists.
     3.4. [x] Implement module discovery to find all `.sh` files in the `modules/` directory.
-    3.5. [ ] Implement the main loop in `setup.sh` to execute the discovered modules in alphabetical order.
+    3.5. [x] Implement the main loop in `setup.sh` to execute the discovered modules in alphabetical order.
 
 4. **Implement Feature Flags**
     4.1. [ ] Add argument parsing to `setup.sh` for selective module execution (e.g., `./setup.sh tmux`).
@@ -74,4 +74,5 @@
 - feat(setup): create main setup.sh script
 - feat(setup): source lib/utils.sh in setup.sh
 - feat(setup): source config.sh if it exists in setup.sh
-- feat(setup): discover modules in modules directory 
+- feat(setup): discover modules in modules directory
+- feat(setup): execute modules in main loop 
