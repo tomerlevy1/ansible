@@ -17,17 +17,21 @@ CASKS=(
   karabiner-elements
 )
 FORMULAE=(
+  bat
   commitizen
   espanso
   eza
+  fd
   fnm
   fzf
   gh
   git
+  git-delta
   jq
   lazygit
   less
   neovim
+  rg
   ripgrep
   sketchybar
   skhd
@@ -79,4 +83,67 @@ for formula in "${FORMULAE[@]}"; do
     log_info "Installing formula: $formula"
     brew install "$formula"
   fi
-done 
+done
+
+# --- Compare installed vs required ---
+
+# Get installed lists
+INSTALLED_FORMULAE=( $(brew list) )
+INSTALLED_CASKS=( $(brew list --cask) )
+
+# Find missing formulae
+MISSING_FORMULAE=()
+for formula in "${FORMULAE[@]}"; do
+  if ! printf '%s\n' "${INSTALLED_FORMULAE[@]}" | grep -qx "$formula"; then
+    MISSING_FORMULAE+=("$formula")
+  fi
+done
+
+# Find extra formulae
+EXTRA_FORMULAE=()
+for formula in "${INSTALLED_FORMULAE[@]}"; do
+  if ! printf '%s\n' "${FORMULAE[@]}" | grep -qx "$formula"; then
+    EXTRA_FORMULAE+=("$formula")
+  fi
+done
+
+# Find missing casks
+MISSING_CASKS=()
+for cask in "${CASKS[@]}"; do
+  if ! printf '%s\n' "${INSTALLED_CASKS[@]}" | grep -qx "$cask"; then
+    MISSING_CASKS+=("$cask")
+  fi
+done
+
+# Find extra casks
+EXTRA_CASKS=()
+for cask in "${INSTALLED_CASKS[@]}"; do
+  if ! printf '%s\n' "${CASKS[@]}" | grep -qx "$cask"; then
+    EXTRA_CASKS+=("$cask")
+  fi
+done
+
+# Log results
+if [ ${#MISSING_FORMULAE[@]} -eq 0 ]; then
+  log_success "All required formulae are installed."
+else
+  log_error "Missing formulae: ${MISSING_FORMULAE[*]}"
+fi
+
+if [ ${#EXTRA_FORMULAE[@]} -eq 0 ]; then
+  log_success "No extra formulae installed."
+else
+  log_info "Extra formulae installed: ${EXTRA_FORMULAE[*]}"
+fi
+
+if [ ${#MISSING_CASKS[@]} -eq 0 ]; then
+  log_success "All required casks are installed."
+else
+  log_error "Missing casks: ${MISSING_CASKS[*]}"
+fi
+
+if [ ${#EXTRA_CASKS[@]} -eq 0 ]; then
+  log_success "No extra casks installed."
+else
+  log_info "Extra casks installed: ${EXTRA_CASKS[*]}"
+fi 

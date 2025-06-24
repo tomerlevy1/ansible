@@ -31,12 +31,12 @@
     5.5. [x] Refactor any interactive steps (e.g., chsh, SSH key generation) out of modules and into the interactive script.
 
 6. **Update Homebrew Module for Full Coverage**
-    6.1. [x] Parse the legacy `tasks/homebrew.yml` to extract all required formulae, casks, and taps. Remove ngrok, alacritty, gimp, and imagemagick from the lists. Final lists are:
+    6.1. [x] Parse the legacy `tasks/homebrew.yml` to extract all required formulae, casks, and taps. Remove ngrok, alacritty, gimp, and imagemagick from the lists. Add bat, fd, rg, and git-delta. Final lists are:
         - **Taps:** homebrew/cask-fonts, koekeishiya/formulae, FelixKratz/formulae, espanso/espanso
         - **Casks:** font-jetbrains-mono-nerd-font, maccy, karabiner-elements
-        - **Formulae:** commitizen, espanso, eza, fnm, fzf, gh, git, jq, lazygit, less, neovim, ripgrep, sketchybar, skhd, starship, stow, tldr, tmux, tree, yabai, yq, z, zsh, zsh-autosuggestions, zsh-history-substring-search, zsh-syntax-highlighting
+        - **Formulae:** bat, commitizen, espanso, eza, fd, fnm, fzf, gh, git, git-delta, jq, lazygit, less, neovim, rg, ripgrep, sketchybar, skhd, starship, stow, tldr, tmux, tree, yabai, yq, z, zsh, zsh-autosuggestions, zsh-history-substring-search, zsh-syntax-highlighting
     6.2. [x] Update `mac-setup/modules/00_homebrew.sh` to install all required formulae, casks, and taps.
-    6.3. [ ] Implement logic to compare the required list against the output of `brew list` and `brew list --cask` to ensure completeness.
+    6.3. [x] Implement logic to compare the required list against the output of `brew list` and `brew list --cask` to ensure completeness.
     6.4. [ ] Ensure the script is idempotent and logs any missing or extra packages.
     6.5. [ ] Test the updated script for idempotency and completeness.
 
@@ -78,10 +78,10 @@
 - `mac-setup/lib/utils.sh`: Utility functions for logging and command checks.
 - `mac-setup/setup.sh`: Main orchestrator script for running unattended setup modules.
 - `mac-setup/setup-interactive.sh`: Script for running interactive steps.
-- `mac-setup/modules/00_homebrew.sh`: Installs Homebrew and all required formulae/casks/taps (idempotent, full coverage).
+- `mac-setup/modules/00_homebrew.sh`: Installs Homebrew and all required formulae/casks/taps (idempotent, full coverage; now includes bat, fd, rg, git-delta).
 - `mac-setup/modules/10_zsh.sh`: Installs Zsh (idempotent, no chsh).
 - `mac-setup/modules/20_tmux.sh`: Installs and configures tmux (idempotent).
-- `tasks/homebrew.yml`: Legacy Ansible file with required Homebrew packages (with ngrok, alacritty, gimp, and imagemagick removed from the new setup).
+- `tasks/homebrew.yml`: Legacy Ansible file with required Homebrew packages (with ngrok, alacritty, gimp, and imagemagick removed, and bat, fd, rg, git-delta added to the new setup).
 
 ---
 
@@ -104,4 +104,6 @@
 - refactor(modules): ensure all modules use utils.sh for logging and checks
 - refactor(setup): move interactive steps to setup-interactive.sh
 - feat(setup-interactive): add clear prompts and instructions for interactive steps
-- feat(homebrew): update Homebrew module to install all required formulae, casks, and taps 
+- feat(homebrew): update Homebrew module to install all required formulae, casks, and taps
+- feat(homebrew): compare installed vs required formulae and casks, log missing/extra
+- chore(homebrew): add bat, fd, rg, and git-delta to required formulae 

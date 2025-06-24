@@ -34,7 +34,7 @@ The current process for setting up a new macOS machine relies on Ansible. While 
 - As a developer, I want to see clear logs during the setup so I know what's happening and can debug issues easily.
 - As a developer, I want to keep my personal API keys and settings separate from the main setup logic so that I don't commit secrets to version control.
 - As a developer, I want the setup to run as unattended as possible, with any required interactive steps clearly separated and explained.
-- As a developer, I want all my required Homebrew packages, casks, and taps to be installed as specified in the legacy Ansible `tasks/homebrew.yml`, and for the script to check against `brew list` to ensure nothing is missing. (Note: ngrok, alacritty, gimp, and imagemagick have been removed from the new setup.)
+- As a developer, I want all my required Homebrew packages, casks, and taps to be installed as specified in the legacy Ansible `tasks/homebrew.yml`, and for the script to check against `brew list` to ensure nothing is missing. (Note: ngrok, alacritty, gimp, and imagemagick have been removed, and bat, fd, rg, and git-delta have been added to the new setup.)
 
 ## 6. System Architecture
 
@@ -94,6 +94,6 @@ mac-setup/
 | 8  | **Documentation** | A `README.md` will explain the project's purpose, usage (including selective execution), and how to create new modules. |
 | 9  | **Dry Run Mode** | A `--dry-run` flag will print the actions that would be taken without actually executing them. |
 | 10 | **Interactive Steps** | All steps requiring user input (e.g., `chsh`, SSH key generation) are deferred to `setup-interactive.sh` and clearly documented. |
-| 11 | **Homebrew Package Coverage** | The Homebrew module/script must install all apps, casks, and taps listed in the legacy `tasks/homebrew.yml`, and compare against the output of `brew list` to ensure all required packages are installed. The script must be idempotent and ensure no required package is missing. (Note: ngrok, alacritty, gimp, and imagemagick have been removed from the new setup.) |
+| 11 | **Homebrew Package Coverage** | The Homebrew module/script must install all apps, casks, and taps listed in the legacy `tasks/homebrew.yml`, and compare against the output of `brew list` to ensure all required packages are installed. The script must be idempotent and ensure no required package is missing. (Note: ngrok, alacritty, gimp, and imagemagick have been removed, and bat, fd, rg, and git-delta have been added to the new setup.) |
 
 --- 
