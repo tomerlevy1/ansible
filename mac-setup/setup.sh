@@ -13,4 +13,16 @@ if [ -f "$CONFIG_FILE" ]; then
   log_info "Loaded user config from config.sh"
 fi
 
+# Discover all .sh modules in the modules directory (sorted)
+MODULES_DIR="$SCRIPT_DIR/modules"
+MODULE_SCRIPTS=( )
+if [ -d "$MODULES_DIR" ]; then
+  while IFS= read -r -d '' file; do
+    MODULE_SCRIPTS+=("$file")
+  done < <(find "$MODULES_DIR" -type f -name '*.sh' -print0 | sort -z)
+  log_info "Discovered ${#MODULE_SCRIPTS[@]} module(s) in $MODULES_DIR."
+else
+  log_error "Modules directory not found: $MODULES_DIR"
+fi
+
 # Further logic will be added in subsequent steps. 
