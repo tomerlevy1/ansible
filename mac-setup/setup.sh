@@ -13,8 +13,16 @@ if [ -f "$CONFIG_FILE" ]; then
   log_info "Loaded user config from config.sh"
 fi
 
-# Parse arguments for selective module execution
-SELECTED_MODULES=("$@")
+# Parse arguments for selective module execution and dry-run
+DRY_RUN=false
+SELECTED_MODULES=()
+for arg in "$@"; do
+  if [[ "$arg" == "--dry-run" ]]; then
+    DRY_RUN=true
+  else
+    SELECTED_MODULES+=("$arg")
+  fi
+done
 
 # Discover all .sh modules in the modules directory (sorted)
 MODULES_DIR="$SCRIPT_DIR/modules"
@@ -43,6 +51,15 @@ if [ ${#SELECTED_MODULES[@]} -gt 0 ]; then
   done
   MODULE_SCRIPTS=("${FILTERED_MODULES[@]}")
   log_info "Filtered to ${#MODULE_SCRIPTS[@]} selected module(s)."
+fi
+
+# Dry run: print what would be executed
+if [ "$DRY_RUN" = true ]; then
+  log_info "Dry run mode: the following modules would be executed:"
+  for module in "${MODULE_SCRIPTS[@]}"; do
+    echo "  - $(basename "$module")"
+  done
+  exit 0
 fi
 
 # Execute each module script in order

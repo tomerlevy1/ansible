@@ -19,9 +19,9 @@
     3.4. [x] Implement module discovery to find all `.sh` files in the `modules/` directory.
     3.5. [x] Implement the main loop in `setup.sh` to execute the discovered modules in alphabetical order.
 
-4. **Implement Feature Flags**
+4. **Implement Feature Flags** [x]
     4.1. [x] Add argument parsing to `setup.sh` for selective module execution (e.g., `./setup.sh tmux`).
-    4.2. [ ] Implement the `--dry-run` flag to show what commands would be executed.
+    4.2. [x] Implement the `--dry-run` flag to show what commands would be executed.
 
 5. **Migrate Ansible Roles to Modules**
     5.1. [ ] Create `mac-setup/modules/00_homebrew.sh` to handle Homebrew installation. This module should be idempotent.
@@ -76,4 +76,5 @@
 - feat(setup): source config.sh if it exists in setup.sh
 - feat(setup): discover modules in modules directory
 - feat(setup): execute modules in main loop
-- feat(setup): add selective module execution via arguments 
+- feat(setup): add selective module execution via arguments
+- feat(setup): add --dry-run flag for module execution 
