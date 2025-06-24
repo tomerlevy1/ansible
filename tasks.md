@@ -23,18 +23,18 @@
     4.1. [x] Add argument parsing to `setup.sh` for selective module execution (e.g., `./setup.sh tmux`).
     4.2. [x] Implement the `--dry-run` flag to show what commands would be executed.
 
-5. **Migrate Ansible Roles to Modules**
+5. **Migrate Ansible Roles to Modules** [x]
     5.1. [x] Create `mac-setup/modules/00_homebrew.sh` to handle Homebrew installation. This module should be idempotent.
     5.2. [x] Create `mac-setup/modules/10_zsh.sh` to install Zsh (no chsh; interactive shell change is deferred).
     5.3. [x] Create `mac-setup/modules/20_tmux.sh` to install and configure tmux.
     5.4. [x] Ensure each module uses the logging and utility functions from `utils.sh`.
-    5.5. [ ] Refactor any interactive steps (e.g., chsh, SSH key generation) out of modules and into the interactive script.
+    5.5. [x] Refactor any interactive steps (e.g., chsh, SSH key generation) out of modules and into the interactive script.
 
 6. **Set Up Configuration Management**
     6.1. [ ] Create `mac-setup/config.sh.example` with commented-out examples of variables.
 
-7. **Create Interactive Setup Script**
-    7.1. [ ] Create `mac-setup/setup-interactive.sh` for all interactive steps (e.g., chsh, SSH key generation).
+7. **Create Interactive Setup Script** [x]
+    7.1. [x] Create `mac-setup/setup-interactive.sh` for all interactive steps (e.g., chsh, SSH key generation).
     7.2. [ ] Add logic to perform interactive steps with clear user prompts and instructions.
 
 8. **Create Documentation**
@@ -67,7 +67,7 @@
 - `mac-setup/.gitignore`: Ignores user config and local files.
 - `mac-setup/lib/utils.sh`: Utility functions for logging and command checks.
 - `mac-setup/setup.sh`: Main orchestrator script for running unattended setup modules.
-- `mac-setup/setup-interactive.sh`: Script for running interactive steps (to be created).
+- `mac-setup/setup-interactive.sh`: Script for running interactive steps.
 - `mac-setup/modules/00_homebrew.sh`: Installs Homebrew if not already installed (idempotent).
 - `mac-setup/modules/10_zsh.sh`: Installs Zsh (idempotent, no chsh).
 - `mac-setup/modules/20_tmux.sh`: Installs and configures tmux (idempotent).
@@ -90,4 +90,5 @@
 - feat(modules): add idempotent Homebrew installation module
 - feat(modules): add idempotent Zsh installation module (no chsh)
 - feat(modules): add idempotent tmux installation module
-- refactor(modules): ensure all modules use utils.sh for logging and checks 
+- refactor(modules): ensure all modules use utils.sh for logging and checks
+- refactor(setup): move interactive steps to setup-interactive.sh 
