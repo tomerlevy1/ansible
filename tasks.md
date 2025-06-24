@@ -25,7 +25,7 @@
 
 5. **Migrate Ansible Roles to Modules**
     5.1. [x] Create `mac-setup/modules/00_homebrew.sh` to handle Homebrew installation. This module should be idempotent.
-    5.2. [ ] Create `mac-setup/modules/10_zsh.sh` to configure Zsh.
+    5.2. [x] Create `mac-setup/modules/10_zsh.sh` to configure Zsh.
     5.3. [ ] Create `mac-setup/modules/20_tmux.sh` to install and configure tmux.
     5.4. [ ] Ensure each module uses the logging and utility functions from `utils.sh`.
 
@@ -63,6 +63,7 @@
 - `mac-setup/lib/utils.sh`: Utility functions for logging and command checks.
 - `mac-setup/setup.sh`: Main orchestrator script for running setup modules.
 - `mac-setup/modules/00_homebrew.sh`: Installs Homebrew if not already installed (idempotent).
+- `mac-setup/modules/10_zsh.sh`: Installs and configures Zsh as the default shell (idempotent).
 
 ---
 
@@ -79,4 +80,5 @@
 - feat(setup): execute modules in main loop
 - feat(setup): add selective module execution via arguments
 - feat(setup): add --dry-run flag for module execution
-- feat(modules): add idempotent Homebrew installation module 
+- feat(modules): add idempotent Homebrew installation module
+- feat(modules): add idempotent Zsh installation and configuration module 
