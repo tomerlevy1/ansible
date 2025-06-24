@@ -1,0 +1,83 @@
+# PRD: macOS Setup Automation
+
+## 1. Background
+
+The current process for setting up a new macOS machine relies on Ansible. While powerful, Ansible can be complex to maintain for this use case. The goal is to migrate to a simpler, more transparent, and developer-friendly solution using plain shell scripts. This new system should be robust, easy to extend, and provide a great user experience for setting up a new development environment quickly and reliably.
+
+## 2. Goals
+
+- **Simplicity & Readability**: The entire system should be easy to understand and maintain. Scripts should be well-structured and clear.
+- **Modularity & Extensibility**: The architecture must be "plug-and-play," allowing new setup components (e.g., installing a new app, configuring a tool) to be added with minimal effort.
+- **Idempotency**: Running the setup script multiple times should not cause errors or unintended side-effects. The script will check for existing installations and configurations and skip them unless explicitly forced.
+- **Testability**: The system must be testable to ensure reliability and prevent regressions as new modules are added.
+- **Informative Output**: Provide clear logging to the user about what is happening, what succeeded, and what failed.
+- **Configuration Management**: A simple mechanism to manage user-specific configurations or secrets should be included.
+
+## 3. Non-Goals
+
+- A graphical user interface (GUI). This will remain a command-line tool.
+- Support for operating systems other than macOS.
+- Complex dependency resolution between modules beyond simple execution ordering.
+- A sophisticated `--help` or `--list` command-line interface. Functionality will be documented in the `README.md`.
+
+## 4. Personas
+
+- **Primary User**: A developer who wants to quickly set up a new MacBook for development work. They are comfortable with the command line and want a reliable, automated process.
+
+## 5. User Stories
+
+- As a developer, I want to run a single command to set up my entire machine so that I can get to work quickly.
+- As a developer, I want the setup process to be idempotent so that I can re-run the script safely to install missing tools without re-installing everything.
+- As a developer, I want to add a new application to my setup by creating a single, simple script.
+- As a developer, I want to run only a specific part of the setup (e.g., just install tmux) to test it or reinstall a specific tool.
+- As a developer, I want to see clear logs during the setup so I know what's happening and can debug issues easily.
+- As a developer, I want to keep my personal API keys and settings separate from the main setup logic so that I don't commit secrets to version control.
+
+## 6. System Architecture
+
+The system will be composed of a main orchestrator script and a collection of independent modules.
+
+```
+mac-setup/
+├── setup.sh           # Main executable to run the setup
+├── README.md          # Documentation
+├── config.sh.example  # Example configuration file
+├── config.sh          # User-specific config (git-ignored)
+├── modules/           # Directory for individual setup scripts (plugins)
+│   ├── 00_homebrew.sh # The '00_' prefix controls execution order
+│   ├── 10_zsh.sh
+│   └── 20_tmux.sh
+├── lib/               # Utility scripts and helper functions
+│   └── utils.sh       # For logging, checks, etc.
+└── tests/             # For testing the scripts
+    ├── test_runner.sh
+    └── bats/          # bats-core testing framework
+```
+
+### Components:
+
+- **`setup.sh`**: The main entry point. It will:
+    - Source the `lib/utils.sh` helper library.
+    - Source the user's `config.sh` if it exists.
+    - Parse command-line arguments (e.g., for selective execution).
+    - Discover and execute scripts from the `modules/` directory in lexicographical order.
+- **`modules/`**: Contains the "feature" scripts. Each script is responsible for one piece of the setup (e.g., installing Homebrew, configuring git). They are self-contained but can use functions from `utils.sh`.
+- **`lib/utils.sh`**: A library of shared shell functions for logging (`log_info`, `log_success`, `log_error`), running commands, and checking for the existence of tools.
+- **`config.sh`**: A user-provided file for secrets and personal configuration, which will be ignored by git. An accompanying `config.sh.example` will document the available options.
+- **`tests/`**: Contains tests for the modules, written using the `bats-core` testing framework.
+
+## 7. Functional Requirements
+
+| ID | Requirement | Details |
+|----|---|---|
+| 1  | **Orchestration** | The `setup.sh` script will execute all `.sh` files in the `modules/` directory alphabetically. |
+| 2  | **Selective Execution** | The user can run specific modules by passing their names as arguments. Ex: `./setup.sh tmux zsh` will only run `20_tmux.sh` and `10_zsh.sh`. If no arguments are given, all modules run. |
+| 3  | **Idempotency** | Each module must check if its task has already been completed (e.g., app installed, config applied) and skip itself if so. |
+| 4  | **Force Execution** | A `--force` flag can be passed to a module to make it run even if it would normally be skipped. Ex: `./setup.sh --force tmux`. |
+| 5  | **Logging** | The `lib/utils.sh` will provide colored logging functions: `log_info` (blue), `log_success` (green), `log_error` (red). |
+| 6  | **Secret Management** | `setup.sh` will source a `config.sh` file if it exists, making environment variables available to all modules. |
+| 7  | **Testing Framework** | The project will include `bats-core` for running automated tests on the modules. |
+| 8  | **Documentation** | A `README.md` will explain the project's purpose, usage (including selective execution), and how to create new modules. |
+| 9  | **Dry Run Mode** | A `--dry-run` flag will print the actions that would be taken without actually executing them. |
+
+--- 
