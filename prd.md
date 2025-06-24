@@ -12,6 +12,7 @@ The current process for setting up a new macOS machine relies on Ansible. While 
 - **Testability**: The system must be testable to ensure reliability and prevent regressions as new modules are added.
 - **Informative Output**: Provide clear logging to the user about what is happening, what succeeded, and what failed.
 - **Configuration Management**: A simple mechanism to manage user-specific configurations or secrets should be included.
+- **Unattended Automation**: Maximize the number of setup steps that can be run without user interaction, to enable "one-click" or CI-based setup.
 
 ## 3. Non-Goals
 
@@ -32,35 +33,47 @@ The current process for setting up a new macOS machine relies on Ansible. While 
 - As a developer, I want to run only a specific part of the setup (e.g., just install tmux) to test it or reinstall a specific tool.
 - As a developer, I want to see clear logs during the setup so I know what's happening and can debug issues easily.
 - As a developer, I want to keep my personal API keys and settings separate from the main setup logic so that I don't commit secrets to version control.
+- As a developer, I want the setup to run as unattended as possible, with any required interactive steps clearly separated and explained.
 
 ## 6. System Architecture
 
-The system will be composed of a main orchestrator script and a collection of independent modules.
+The system is split into two phases to maximize unattended automation:
+
+### Phase 1: Unattended Setup
+- **Script:** `setup.sh` (or `setup-unattended.sh`)
+- **Purpose:** Runs all non-interactive, idempotent modules (e.g., Homebrew install, package installs, config file setup).
+- **Behavior:** Skips or defers any step that requires user input (e.g., changing the default shell, SSH key generation).
+- **Outcome:** Can be run unattended, in CI, or as a "one-click" setup.
+
+### Phase 2: Interactive Setup
+- **Script:** `setup-interactive.sh`
+- **Purpose:** Handles all steps that require user input or authentication (e.g., changing the default shell, manual dotfile symlinks, SSH key prompts).
+- **Behavior:** Prints clear instructions and warnings for each interactive step. Can be run after the unattended script, or whenever the user is ready.
+
+### Directory Structure
 
 ```
 mac-setup/
-├── setup.sh           # Main executable to run the setup
-├── README.md          # Documentation
-├── config.sh.example  # Example configuration file
-├── config.sh          # User-specific config (git-ignored)
-├── modules/           # Directory for individual setup scripts (plugins)
-│   ├── 00_homebrew.sh # The '00_' prefix controls execution order
-│   ├── 10_zsh.sh
+├── setup.sh                # Main unattended setup script
+├── setup-interactive.sh    # Interactive steps script
+├── README.md               # Documentation
+├── config.sh.example       # Example configuration file
+├── config.sh               # User-specific config (git-ignored)
+├── modules/                # Directory for individual setup scripts (plugins)
+│   ├── 00_homebrew.sh      # The '00_' prefix controls execution order
+│   ├── 10_zsh.sh           # Zsh install only (no chsh)
 │   └── 20_tmux.sh
-├── lib/               # Utility scripts and helper functions
-│   └── utils.sh       # For logging, checks, etc.
-└── tests/             # For testing the scripts
+├── lib/                    # Utility scripts and helper functions
+│   └── utils.sh            # For logging, checks, etc.
+└── tests/                  # For testing the scripts
     ├── test_runner.sh
-    └── bats/          # bats-core testing framework
+    └── bats/               # bats-core testing framework
 ```
 
 ### Components:
 
-- **`setup.sh`**: The main entry point. It will:
-    - Source the `lib/utils.sh` helper library.
-    - Source the user's `config.sh` if it exists.
-    - Parse command-line arguments (e.g., for selective execution).
-    - Discover and execute scripts from the `modules/` directory in lexicographical order.
+- **`setup.sh`**: The main entry point for unattended setup. Executes all non-interactive modules.
+- **`setup-interactive.sh`**: Handles all interactive steps, such as changing the default shell or generating SSH keys.
 - **`modules/`**: Contains the "feature" scripts. Each script is responsible for one piece of the setup (e.g., installing Homebrew, configuring git). They are self-contained but can use functions from `utils.sh`.
 - **`lib/utils.sh`**: A library of shared shell functions for logging (`log_info`, `log_success`, `log_error`), running commands, and checking for the existence of tools.
 - **`config.sh`**: A user-provided file for secrets and personal configuration, which will be ignored by git. An accompanying `config.sh.example` will document the available options.
@@ -70,7 +83,7 @@ mac-setup/
 
 | ID | Requirement | Details |
 |----|---|---|
-| 1  | **Orchestration** | The `setup.sh` script will execute all `.sh` files in the `modules/` directory alphabetically. |
+| 1  | **Orchestration** | The `setup.sh` script will execute all `.sh` files in the `modules/` directory alphabetically, skipping interactive steps. |
 | 2  | **Selective Execution** | The user can run specific modules by passing their names as arguments. Ex: `./setup.sh tmux zsh` will only run `20_tmux.sh` and `10_zsh.sh`. If no arguments are given, all modules run. |
 | 3  | **Idempotency** | Each module must check if its task has already been completed (e.g., app installed, config applied) and skip itself if so. |
 | 4  | **Force Execution** | A `--force` flag can be passed to a module to make it run even if it would normally be skipped. Ex: `./setup.sh --force tmux`. |
@@ -79,5 +92,6 @@ mac-setup/
 | 7  | **Testing Framework** | The project will include `bats-core` for running automated tests on the modules. |
 | 8  | **Documentation** | A `README.md` will explain the project's purpose, usage (including selective execution), and how to create new modules. |
 | 9  | **Dry Run Mode** | A `--dry-run` flag will print the actions that would be taken without actually executing them. |
+| 10 | **Interactive Steps** | All steps requiring user input (e.g., `chsh`, SSH key generation) are deferred to `setup-interactive.sh` and clearly documented. |
 
 --- 

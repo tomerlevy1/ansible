@@ -13,7 +13,7 @@
     2.3. [x] Add a helper function to check for the existence of a command (e.g., `command_exists`).
 
 3. **Develop the Main Orchestrator Script** [x]
-    3.1. [x] Create the main script `mac-setup/setup.sh`.
+    3.1. [x] Create the main script `mac-setup/setup.sh` (unattended setup).
     3.2. [x] Implement logic in `setup.sh` to source `lib/utils.sh`.
     3.3. [x] Add logic to source `mac-setup/config.sh` if it exists.
     3.4. [x] Implement module discovery to find all `.sh` files in the `modules/` directory.
@@ -25,34 +25,39 @@
 
 5. **Migrate Ansible Roles to Modules**
     5.1. [x] Create `mac-setup/modules/00_homebrew.sh` to handle Homebrew installation. This module should be idempotent.
-    5.2. [x] Create `mac-setup/modules/10_zsh.sh` to configure Zsh.
+    5.2. [x] Create `mac-setup/modules/10_zsh.sh` to install Zsh (no chsh; interactive shell change is deferred).
     5.3. [ ] Create `mac-setup/modules/20_tmux.sh` to install and configure tmux.
     5.4. [ ] Ensure each module uses the logging and utility functions from `utils.sh`.
+    5.5. [ ] Refactor any interactive steps (e.g., chsh, SSH key generation) out of modules and into the interactive script.
 
 6. **Set Up Configuration Management**
     6.1. [ ] Create `mac-setup/config.sh.example` with commented-out examples of variables.
 
-7. **Create Documentation**
-    7.1. [ ] Create a comprehensive `mac-setup/README.md`.
-    7.2. [ ] Document the project's purpose, how to run the setup, and how to use features like selective execution and the `config.sh` file.
-    7.3. [ ] Add a guide for developers on how to create a new module.
+7. **Create Interactive Setup Script**
+    7.1. [ ] Create `mac-setup/setup-interactive.sh` for all interactive steps (e.g., chsh, SSH key generation).
+    7.2. [ ] Add logic to perform interactive steps with clear user prompts and instructions.
+
+8. **Create Documentation**
+    8.1. [ ] Create a comprehensive `mac-setup/README.md`.
+    8.2. [ ] Document the project's purpose, how to run the unattended and interactive setup scripts, and how to use features like selective execution and the `config.sh` file.
+    8.3. [ ] Add a guide for developers on how to create a new module and how to decide if a step belongs in the unattended or interactive script.
 
 ---
 
 ## Nice to Have
 
-8. **Implement Testing**
-    8.1. [ ] Add `bats-core` as a git submodule or download it into the `mac-setup/tests/` directory.
-    8.2. [ ] Create a `mac-setup/tests/test_runner.sh` to execute all tests.
-    8.3. [ ] Write a basic test file (e.g., `mac-setup/tests/test_tmux.sh`) to verify the `tmux` module's functionality.
+9. **Implement Testing**
+    9.1. [ ] Add `bats-core` as a git submodule or download it into the `mac-setup/tests/` directory.
+    9.2. [ ] Create a `mac-setup/tests/test_runner.sh` to execute all tests.
+    9.3. [ ] Write a basic test file (e.g., `mac-setup/tests/test_tmux.sh`) to verify the `tmux` module's functionality.
 
-9. **Final Cleanup**
-    9.1. [ ] Remove all the old Ansible-related files and directories (`ansible_run`, `install_ansible`, `inventory`, `main.yml`, `tasks/`, `vars.yml`).
-    9.2. [ ] Move the new `mac-setup` contents to the root of the project.
-    9.3. [ ] Delete the `prd.md` and `generate-tasks.mdc` files.
+10. **Final Cleanup**
+    10.1. [ ] Remove all the old Ansible-related files and directories (`ansible_run`, `install_ansible`, `inventory`, `main.yml`, `tasks/`, `vars.yml`).
+    10.2. [ ] Move the new `mac-setup` contents to the root of the project.
+    10.3. [ ] Delete the `prd.md` and `generate-tasks.mdc` files.
 
-10. **Implement the `--force` Flag**
-    10.1. [ ] Implement the `--force` flag to allow re-running a module.
+11. **Implement the `--force` Flag**
+    11.1. [ ] Implement the `--force` flag to allow re-running a module.
 
 ---
 
@@ -61,9 +66,10 @@
 - `mac-setup/` (directory): Root directory for the new setup system.
 - `mac-setup/.gitignore`: Ignores user config and local files.
 - `mac-setup/lib/utils.sh`: Utility functions for logging and command checks.
-- `mac-setup/setup.sh`: Main orchestrator script for running setup modules.
+- `mac-setup/setup.sh`: Main orchestrator script for running unattended setup modules.
+- `mac-setup/setup-interactive.sh`: Script for running interactive steps (to be created).
 - `mac-setup/modules/00_homebrew.sh`: Installs Homebrew if not already installed (idempotent).
-- `mac-setup/modules/10_zsh.sh`: Installs and configures Zsh as the default shell (idempotent).
+- `mac-setup/modules/10_zsh.sh`: Installs Zsh (idempotent, no chsh).
 
 ---
 
@@ -81,4 +87,5 @@
 - feat(setup): add selective module execution via arguments
 - feat(setup): add --dry-run flag for module execution
 - feat(modules): add idempotent Homebrew installation module
-- feat(modules): add idempotent Zsh installation and configuration module 
+- feat(modules): add idempotent Zsh installation module (no chsh)
+- feat(setup): add setup-interactive.sh for interactive steps 
