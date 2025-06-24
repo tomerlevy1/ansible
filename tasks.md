@@ -30,34 +30,44 @@
     5.4. [x] Ensure each module uses the logging and utility functions from `utils.sh`.
     5.5. [x] Refactor any interactive steps (e.g., chsh, SSH key generation) out of modules and into the interactive script.
 
-6. **Set Up Configuration Management**
-    6.1. [ ] Create `mac-setup/config.sh.example` with commented-out examples of variables.
+6. **Update Homebrew Module for Full Coverage**
+    6.1. [x] Parse the legacy `tasks/homebrew.yml` to extract all required formulae, casks, and taps. Remove ngrok, alacritty, gimp, and imagemagick from the lists. Final lists are:
+        - **Taps:** homebrew/cask-fonts, koekeishiya/formulae, FelixKratz/formulae, espanso/espanso
+        - **Casks:** font-jetbrains-mono-nerd-font, maccy, karabiner-elements
+        - **Formulae:** commitizen, espanso, eza, fnm, fzf, gh, git, jq, lazygit, less, neovim, ripgrep, sketchybar, skhd, starship, stow, tldr, tmux, tree, yabai, yq, z, zsh, zsh-autosuggestions, zsh-history-substring-search, zsh-syntax-highlighting
+    6.2. [x] Update `mac-setup/modules/00_homebrew.sh` to install all required formulae, casks, and taps.
+    6.3. [ ] Implement logic to compare the required list against the output of `brew list` and `brew list --cask` to ensure completeness.
+    6.4. [ ] Ensure the script is idempotent and logs any missing or extra packages.
+    6.5. [ ] Test the updated script for idempotency and completeness.
 
-7. **Create Interactive Setup Script** [x]
-    7.1. [x] Create `mac-setup/setup-interactive.sh` for all interactive steps (e.g., chsh, SSH key generation).
-    7.2. [x] Add logic to perform interactive steps with clear user prompts and instructions.
+7. **Set Up Configuration Management**
+    7.1. [ ] Create `mac-setup/config.sh.example` with commented-out examples of variables.
 
-8. **Create Documentation**
-    8.1. [ ] Create a comprehensive `mac-setup/README.md`.
-    8.2. [ ] Document the project's purpose, how to run the unattended and interactive setup scripts, and how to use features like selective execution and the `config.sh` file.
-    8.3. [ ] Add a guide for developers on how to create a new module and how to decide if a step belongs in the unattended or interactive script.
+8. **Create Interactive Setup Script** [x]
+    8.1. [x] Create `mac-setup/setup-interactive.sh` for all interactive steps (e.g., chsh, SSH key generation).
+    8.2. [x] Add logic to perform interactive steps with clear user prompts and instructions.
+
+9. **Create Documentation**
+    9.1. [ ] Create a comprehensive `mac-setup/README.md`.
+    9.2. [ ] Document the project's purpose, how to run the unattended and interactive setup scripts, and how to use features like selective execution and the `config.sh` file.
+    9.3. [ ] Add a guide for developers on how to create a new module and how to decide if a step belongs in the unattended or interactive script.
 
 ---
 
 ## Nice to Have
 
-9. **Implement Testing**
-    9.1. [ ] Add `bats-core` as a git submodule or download it into the `mac-setup/tests/` directory.
-    9.2. [ ] Create a `mac-setup/tests/test_runner.sh` to execute all tests.
-    9.3. [ ] Write a basic test file (e.g., `mac-setup/tests/test_tmux.sh`) to verify the `tmux` module's functionality.
+10. **Implement Testing**
+    10.1. [ ] Add `bats-core` as a git submodule or download it into the `mac-setup/tests/` directory.
+    10.2. [ ] Create a `mac-setup/tests/test_runner.sh` to execute all tests.
+    10.3. [ ] Write a basic test file (e.g., `mac-setup/tests/test_tmux.sh`) to verify the `tmux` module's functionality.
 
-10. **Final Cleanup**
-    10.1. [ ] Remove all the old Ansible-related files and directories (`ansible_run`, `install_ansible`, `inventory`, `main.yml`, `tasks/`, `vars.yml`).
-    10.2. [ ] Move the new `mac-setup` contents to the root of the project.
-    10.3. [ ] Delete the `prd.md` and `generate-tasks.mdc` files.
+11. **Final Cleanup**
+    11.1. [ ] Remove all the old Ansible-related files and directories (`ansible_run`, `install_ansible`, `inventory`, `main.yml`, `tasks/`, `vars.yml`).
+    11.2. [ ] Move the new `mac-setup` contents to the root of the project.
+    11.3. [ ] Delete the `prd.md` and `generate-tasks.mdc` files.
 
-11. **Implement the `--force` Flag**
-    11.1. [ ] Implement the `--force` flag to allow re-running a module.
+12. **Implement the `--force` Flag**
+    12.1. [ ] Implement the `--force` flag to allow re-running a module.
 
 ---
 
@@ -68,9 +78,10 @@
 - `mac-setup/lib/utils.sh`: Utility functions for logging and command checks.
 - `mac-setup/setup.sh`: Main orchestrator script for running unattended setup modules.
 - `mac-setup/setup-interactive.sh`: Script for running interactive steps.
-- `mac-setup/modules/00_homebrew.sh`: Installs Homebrew if not already installed (idempotent).
+- `mac-setup/modules/00_homebrew.sh`: Installs Homebrew and all required formulae/casks/taps (idempotent, full coverage).
 - `mac-setup/modules/10_zsh.sh`: Installs Zsh (idempotent, no chsh).
 - `mac-setup/modules/20_tmux.sh`: Installs and configures tmux (idempotent).
+- `tasks/homebrew.yml`: Legacy Ansible file with required Homebrew packages (with ngrok, alacritty, gimp, and imagemagick removed from the new setup).
 
 ---
 
@@ -92,4 +103,5 @@
 - feat(modules): add idempotent tmux installation module
 - refactor(modules): ensure all modules use utils.sh for logging and checks
 - refactor(setup): move interactive steps to setup-interactive.sh
-- feat(setup-interactive): add clear prompts and instructions for interactive steps 
+- feat(setup-interactive): add clear prompts and instructions for interactive steps
+- feat(homebrew): update Homebrew module to install all required formulae, casks, and taps 
