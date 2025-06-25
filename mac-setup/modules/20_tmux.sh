@@ -23,6 +23,16 @@ else
   fi
 fi
 
+# Install TPM (Tmux Plugin Manager) if not present
+TPM_DIR="$HOME/.tmux/plugins/tpm"
+if [ ! -d "$TPM_DIR" ]; then
+  log_info "Installing TPM (Tmux Plugin Manager)..."
+  git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+  log_success "TPM installed."
+else
+  log_success "TPM is already installed."
+fi
+
 # Optionally, add configuration steps here (e.g., copy a default .tmux.conf)
 # log_info "Configuring tmux..."
 # cp "$SCRIPT_DIR/configs/tmux.conf" "$HOME/.tmux.conf" 

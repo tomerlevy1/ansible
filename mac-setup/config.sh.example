@@ -2,10 +2,10 @@
 # Copy this file to config.sh and edit as needed. This file is ignored by git.
 
 # Your Git user name
-# GIT_NAME="Your Name"
+# GIT_NAME="Tomer Levy"
 
 # Your Git email
-# GIT_EMAIL="your@email.com"
+# GIT_EMAIL="tomer.levy@teads.com"
 
 # Example: Set your preferred default shell (optional, used by interactive script)
 # DEFAULT_SHELL="/opt/homebrew/bin/zsh"
