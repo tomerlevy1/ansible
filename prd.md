@@ -35,6 +35,8 @@ The current process for setting up a new macOS machine relies on Ansible. While 
 - As a developer, I want to keep my personal API keys and settings separate from the main setup logic so that I don't commit secrets to version control.
 - As a developer, I want the setup to run as unattended as possible, with any required interactive steps clearly separated and explained.
 - As a developer, I want all my required Homebrew packages, casks, and taps to be installed as specified in the legacy Ansible `tasks/homebrew.yml`, and for the script to check against `brew list` to ensure nothing is missing. (Note: ngrok, alacritty, gimp, and imagemagick have been removed, and bat, fd, rg, and git-delta have been added to the new setup.)
+- As a developer, I want the setup to install the Tmux Plugin Manager (TPM) if not already present.
+- As a developer, I want the setup to install Oh-My-Zsh and the plugins zsh-fzf-history-search and evalcache if not already present.
 
 ## 6. System Architecture
 
@@ -62,8 +64,8 @@ mac-setup/
 ├── config.sh               # User-specific config (git-ignored)
 ├── modules/                # Directory for individual setup scripts (plugins)
 │   ├── 00_homebrew.sh      # The '00_' prefix controls execution order
-│   ├── 10_zsh.sh           # Zsh install only (no chsh)
-│   └── 20_tmux.sh
+│   ├── 10_zsh.sh           # Zsh install, Oh-My-Zsh, plugins (no chsh)
+│   └── 20_tmux.sh          # Tmux and TPM
 ├── lib/                    # Utility scripts and helper functions
 │   └── utils.sh            # For logging, checks, etc.
 └── tests/                  # For testing the scripts
@@ -75,7 +77,7 @@ mac-setup/
 
 - **`setup.sh`**: The main entry point for unattended setup. Executes all non-interactive modules.
 - **`setup-interactive.sh`**: Handles all interactive steps, such as changing the default shell or generating SSH keys.
-- **`modules/`**: Contains the "feature" scripts. Each script is responsible for one piece of the setup (e.g., installing Homebrew, configuring git). They are self-contained but can use functions from `utils.sh`.
+- **`modules/`**: Contains the "feature" scripts. Each script is responsible for one piece of the setup (e.g., installing Homebrew, configuring git, installing TPM, Oh-My-Zsh, and plugins). They are self-contained but can use functions from `utils.sh`.
 - **`lib/utils.sh`**: A library of shared shell functions for logging (`log_info`, `log_success`, `log_error`), running commands, and checking for the existence of tools.
 - **`config.sh`**: A user-provided file for secrets and personal configuration, which will be ignored by git. An accompanying `config.sh.example` will document the available options.
 - **`tests/`**: Contains tests for the modules, written using the `bats-core` testing framework.
@@ -95,5 +97,7 @@ mac-setup/
 | 9  | **Dry Run Mode** | A `--dry-run` flag will print the actions that would be taken without actually executing them. |
 | 10 | **Interactive Steps** | All steps requiring user input (e.g., `chsh`, SSH key generation) are deferred to `setup-interactive.sh` and clearly documented. |
 | 11 | **Homebrew Package Coverage** | The Homebrew module/script must install all apps, casks, and taps listed in the legacy `tasks/homebrew.yml`, and compare against the output of `brew list` to ensure all required packages are installed. The script must be idempotent and ensure no required package is missing. (Note: ngrok, alacritty, gimp, and imagemagick have been removed, and bat, fd, rg, and git-delta have been added to the new setup.) |
+| 12 | **Tmux Plugin Manager** | The setup must install the Tmux Plugin Manager (TPM) by cloning https://github.com/tmux-plugins/tpm into ~/.tmux/plugins/tpm if not already present. |
+| 13 | **Zsh Plugins and Oh-My-Zsh** | The setup must install Oh-My-Zsh if not present, and install the plugins zsh-fzf-history-search and evalcache into ~/.oh-my-zsh/plugins if not present. Optionally, check for /opt/homebrew/bin/zsh and document as a note. Changing the default shell is handled in the interactive script. |
 
 --- 

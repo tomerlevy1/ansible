@@ -16,3 +16,41 @@ if ! command_exists zsh; then
 else
   log_success "Zsh is already installed."
 fi 
+
+# Install Oh-My-Zsh if not present
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  log_info "Installing Oh-My-Zsh..."
+  RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  log_success "Oh-My-Zsh installed."
+else
+  log_success "Oh-My-Zsh is already installed."
+fi
+
+# Install zsh-fzf-history-search plugin if not present
+if [ ! -d "$HOME/.oh-my-zsh/plugins/zsh-fzf-history-search" ]; then
+  log_info "Installing zsh-fzf-history-search plugin..."
+  git clone https://github.com/joshskidmore/zsh-fzf-history-search.git "$HOME/.oh-my-zsh/plugins/zsh-fzf-history-search"
+  log_success "zsh-fzf-history-search plugin installed."
+else
+  log_success "zsh-fzf-history-search plugin is already installed."
+fi
+
+# Install zsh-syntax-highlighting plugin if not present
+if [ ! -d "$HOME/.oh-my-zsh/plugins/zsh-syntax-highlighting" ]; then
+  log_info "Installing zsh-syntax-highlighting plugin..."
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/plugins/zsh-syntax-highlighting"
+  log_success "zsh-syntax-highlighting plugin installed."
+else
+  log_success "zsh-syntax-highlighting plugin is already installed."
+fi
+
+# Install zsh-autosuggestions plugin if not present
+if [ ! -d "$HOME/.oh-my-zsh/plugins/zsh-autosuggestions" ]; then
+  log_info "Installing zsh-autosuggestions plugin..."
+  git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/plugins/zsh-autosuggestions"
+  log_success "zsh-autosuggestions plugin installed."
+else
+  log_success "zsh-autosuggestions plugin is already installed."
+fi
+
+# Note: No logic for git, z, docker, npm, brew, or evalcache plugins as per user request. 

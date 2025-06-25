@@ -64,7 +64,7 @@
     - tree
     - yabai
     - yq
-    - z
+    - zoxide
     - zsh
     - zsh-autosuggestions
     - zsh-history-substring-search

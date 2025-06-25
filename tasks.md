@@ -25,8 +25,8 @@
 
 5. **Migrate Ansible Roles to Modules** [x]
     5.1. [x] Create `mac-setup/modules/00_homebrew.sh` to handle Homebrew installation. This module should be idempotent.
-    5.2. [x] Create `mac-setup/modules/10_zsh.sh` to install Zsh (no chsh; interactive shell change is deferred).
-    5.3. [x] Create `mac-setup/modules/20_tmux.sh` to install and configure tmux.
+    5.2. [x] Create `mac-setup/modules/10_zsh.sh` to install Zsh, Oh-My-Zsh, and plugins (idempotent, no chsh).
+    5.3. [x] Create `mac-setup/modules/20_tmux.sh` to install and configure tmux and TPM (idempotent).
     5.4. [x] Ensure each module uses the logging and utility functions from `utils.sh`.
     5.5. [x] Refactor any interactive steps (e.g., chsh, SSH key generation) out of modules and into the interactive script.
 
@@ -79,9 +79,13 @@
 - `mac-setup/setup.sh`: Main orchestrator script for running unattended setup modules.
 - `mac-setup/setup-interactive.sh`: Script for running interactive steps.
 - `mac-setup/modules/00_homebrew.sh`: Installs Homebrew and all required formulae/casks/taps (idempotent, full coverage; now includes bat, fd, rg, git-delta).
-- `mac-setup/modules/10_zsh.sh`: Installs Zsh (idempotent, no chsh).
-- `mac-setup/modules/20_tmux.sh`: Installs and configures tmux (idempotent).
-- `tasks/homebrew.yml`: Legacy Ansible file with required Homebrew packages (with ngrok, alacritty, gimp, and imagemagick removed, and bat, fd, rg, git-delta added to the new setup).
+- `mac-setup/modules/10_zsh.sh`: Installs Zsh, Oh-My-Zsh, and plugins (idempotent, no chsh).
+- `mac-setup/modules/20_tmux.sh`: Installs and configures tmux and TPM (idempotent).
+- `mac-setup/config.sh.example`: Example user config file.
+- `mac-setup/config.sh`: User-specific config (git-ignored).
+- `mac-setup/tests/`: Directory for BATS and other test scripts.
+- `mac-setup/README.md`: Project documentation.
+- `tasks/homebrew.yml`: Legacy Ansible file with required Homebrew packages.
 
 ---
 
@@ -106,4 +110,7 @@
 - feat(setup-interactive): add clear prompts and instructions for interactive steps
 - feat(homebrew): update Homebrew module to install all required formulae, casks, and taps
 - feat(homebrew): compare installed vs required formulae and casks, log missing/extra
-- chore(homebrew): add bat, fd, rg, and git-delta to required formulae 
+- chore(homebrew): add bat, fd, rg, and git-delta to required formulae
+- feat(tmux): add TPM installation to tmux module
+- feat(zsh): add Oh-My-Zsh and plugin installation to zsh module
+- docs(zsh): warn if /opt/homebrew/bin/zsh is not found 
