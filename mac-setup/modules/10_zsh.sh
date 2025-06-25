@@ -17,6 +17,13 @@ else
   log_success "Zsh is already installed."
 fi 
 
+# Warn if /opt/homebrew/bin/zsh is not found
+if [ ! -x "/opt/homebrew/bin/zsh" ]; then
+  log_error "/opt/homebrew/bin/zsh not found. If you installed Zsh via Homebrew, ensure it is correctly linked."
+else
+  log_info "/opt/homebrew/bin/zsh is present."
+fi
+
 # Install Oh-My-Zsh if not present
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   log_info "Installing Oh-My-Zsh..."

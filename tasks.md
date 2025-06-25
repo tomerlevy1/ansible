@@ -112,5 +112,5 @@
 - feat(homebrew): compare installed vs required formulae and casks, log missing/extra
 - chore(homebrew): add bat, fd, rg, and git-delta to required formulae
 - feat(tmux): add TPM installation to tmux module
-- feat(zsh): add Oh-My-Zsh and plugin installation to zsh module
+- feat(zsh): ensure only zsh-fzf-history-search, zsh-syntax-highlighting, and zsh-autosuggestions plugins are installed
 - docs(zsh): warn if /opt/homebrew/bin/zsh is not found 
