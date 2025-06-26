@@ -16,6 +16,9 @@ CASKS=(
   maccy
   karabiner-elements
   ghostty
+  obsidian
+  google-chrome
+  mysqlworkbench
 )
 FORMULAE=(
   bat
