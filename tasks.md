@@ -57,20 +57,20 @@
 ## New/Upcoming Tasks
 
 10. **Create Git Configuration Module**
-    10.1. [ ] Create `mac-setup/modules/40_git.sh` to set all global git configs, ensure `.gitignore` exists, and check `/etc/git/hooks`.
+    10.1. [x] Create `mac-setup/modules/40_git.sh` to set all core global git configs (editor, pull, fetch, branch, default branch, credential helper, user/email from env vars).
+    10.2. [x] Set global gitignore to `$HOME/.gitignore_global` if present, otherwise skip (warn if not found).
 
 11. **Add GitHub CLI Installation**
-    11.1. [ ] Ensure `gh` is included in the Homebrew formulae in `00_homebrew.sh` (already present, but verify).
+    11.1. [x] Ensure `gh` is included in the Homebrew formulae in `00_homebrew.sh` (already present, but verify).
 
 12. **Add GitHub Authentication to Interactive Script**
-    12.1. [ ] Add a step to `mac-setup/setup-interactive.sh` to run `gh auth login` if not already authenticated.
+    12.1. [x] Add a step to `mac-setup/setup-interactive.sh` to run `gh auth login` if not already authenticated.
 
 13. **Split Dotfiles Module into Submodules**
-    13.1. [ ] Create `mac-setup/modules/30_dotfiles-clone.sh` to clone the dotfiles repo if not present.
-    13.2. [ ] Create `mac-setup/modules/31_dotfiles-install.sh` to run `install.sh` from `.dotfiles` if present and executable.
-    13.3. [ ] Create `mac-setup/modules/32_nvim-config.sh` to clone Neovim config if not present.
-    13.4. [ ] Create `mac-setup/modules/33_gitignore-global.sh` to set up global gitignore if `.gitignore_global` exists.
-    13.5. [ ] Remove logic from `30_dotfiles.sh` and leave a comment indicating the split.
+    13.1. [x] Create `mac-setup/modules/30_dotfiles-clone.sh` to clone the dotfiles repo if not present.
+    13.2. [x] Create `mac-setup/modules/31_dotfiles-install.sh` to run `install.sh` from `.dotfiles` if present and executable.
+    13.3. [x] Create `mac-setup/modules/32_nvim-config.sh` to clone Neovim config if not present.
+    13.4. [x] Remove logic from `30_dotfiles.sh` and delete the file.
 
 ---
 
@@ -93,12 +93,10 @@
 
 ## Relevant Files
 
-- `mac-setup/modules/40_git.sh`: Handles all global git configuration and setup.
+- `mac-setup/modules/40_git.sh`: Handles all core global git configuration and sets global gitignore if present.
 - `mac-setup/modules/30_dotfiles-clone.sh`: Clones the dotfiles repo if not present.
 - `mac-setup/modules/31_dotfiles-install.sh`: Runs `install.sh` from `.dotfiles` if present and executable.
 - `mac-setup/modules/32_nvim-config.sh`: Clones Neovim config if not present.
-- `mac-setup/modules/33_gitignore-global.sh`: Sets up global gitignore if `.gitignore_global` exists.
-- `mac-setup/modules/30_dotfiles.sh`: Legacy module, now split into submodules.
 - `mac-setup/setup-interactive.sh`: Script for running interactive steps, now includes GitHub authentication.
 - `mac-setup/modules/00_homebrew.sh`: Installs Homebrew and all required formulae/casks/taps (verify `gh` is present).
 

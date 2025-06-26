@@ -14,17 +14,20 @@
 ## Quick Start
 
 1. **Clone the repository:**
+
    ```bash
    git clone <your-repo-url> && cd mac-setup
    ```
 
 2. **(Optional) Copy and edit your config:**
+
    ```bash
    cp config.sh.example config.sh
    # Edit config.sh to set any personal variables
    ```
 
 3. **Run the unattended setup:**
+
    ```bash
    ./setup.sh
    # Or run specific modules:
@@ -83,7 +86,7 @@
   - karabiner-elements
   - ghostty
 - **Formulae:**
-  - bat, commitizen, espanso, eza, fd, fnm, fzf, gh, git, git-delta, jq, lazygit, less, neovim, ripgrep, sketchybar, skhd, starship, stow, tldr, tmux, tree, yabai, yq, zoxide, zsh, zsh-autosuggestions, zsh-history-substring-search, zsh-syntax-highlighting
+  - bat, commitizen, espanso, eza, fd, fnm, fzf, gh, git, git-delta, jq, lazygit, less, neovim, ripgrep, sketchybar, skhd, starship, stow, tldr, tmux, tree, yabai, yq, zoxide, zsh, zsh-autosuggestions, zsh-history-substring-search, zsh-syntax-highlighting, **tart**
 
 ---
 
@@ -98,7 +101,7 @@
 - **System Integrity Protection (SIP):**
   - Some advanced features require partially disabling SIP. See the [yabai wiki](https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection) for details. This is optional but recommended for power users.
 - **Code Signing:**
-  - If building from source or using advanced features, you may need to code sign the binary. See the [yabai documentation](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)) for instructions.
+  - If building from source or using advanced features, you may need to code sign the binary. See the [yabai documentation](<https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)>) for instructions.
 - **System Settings:**
   - Ensure "Displays have separate Spaces" is enabled in Mission Control (System Settings > Desktop & Dock > Mission Control).
   - Disable "Automatically rearrange Spaces based on most recent use" for reliable space management.
@@ -136,11 +139,24 @@ For more, see the [official yabai documentation](https://github.com/koekeishiya/
   - Make your script idempotent.
   - If your step requires user input, move it to `setup-interactive.sh`.
 - **Testing:**
-  - (Planned) Use BATS in `tests/` for automated testing.
+  - (TODO) Use BATS in `tests/` for automated testing.
   - Test modules individually by running `./setup.sh <module>`.
-- **Extending:**
-  - Add new Homebrew packages to the arrays in `00_homebrew.sh`.
-  - Add new plugins or tools as new modules.
+  - Manual testing using tart (see below).
+
+### Tart (VMs on Apple Silicon)
+
+- [Tart](https://github.com/cirruslabs/tart) is a virtualization toolset to build, run, and manage macOS and Linux VMs on Apple Silicon. It uses Apple's Virtualization.Framework for near-native performance and is ideal for CI and automation workflows.
+- **Manual test:**
+  1. Install Tart:
+     ```sh
+     brew install cirruslabs/cli/tart
+     ```
+  2. To try running a VM (downloads a big image):
+     ```sh
+     tart clone ghcr.io/cirruslabs/macos-sequoia-base:latest sequoia-base
+     tart run sequoia-base
+     ```
+  3. For more info, see the [official documentation](https://github.com/cirruslabs/tart).
 
 ---
 
@@ -159,4 +175,5 @@ For more, see the [official yabai documentation](https://github.com/koekeishiya/
 
 ## License
 
-MIT. See [LICENSE](../LICENSE) for details. 
+MIT. See [LICENSE](../LICENSE) for details.
+
