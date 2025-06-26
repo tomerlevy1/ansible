@@ -30,6 +30,31 @@ else
   exit 1
 fi
 
+# GitHub CLI authentication
+if command_exists gh; then
+  if ! gh auth status &>/dev/null; then
+    echo
+    log_info "GitHub CLI (gh) is installed but not authenticated."
+    read -p "Would you like to run 'gh auth login' now? [Y/n] " yn
+    case $yn in
+      [Nn]*) log_warn "Skipping GitHub authentication." ;;
+      *)
+        log_info "Launching 'gh auth login'..."
+        gh auth login
+        if [ $? -eq 0 ]; then
+          log_success "GitHub CLI authenticated successfully."
+        else
+          log_error "GitHub CLI authentication failed."
+        fi
+        ;;
+    esac
+  else
+    log_success "GitHub CLI is already authenticated."
+  fi
+else
+  log_warn "GitHub CLI (gh) is not installed. Please run the unattended setup first."
+fi
+
 echo
 log_info "Interactive setup complete. If you changed your shell, please restart your terminal."
 # Add more interactive steps here as needed (e.g., SSH key generation) 

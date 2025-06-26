@@ -54,38 +54,53 @@
 
 ---
 
+## New/Upcoming Tasks
+
+10. **Create Git Configuration Module**
+    10.1. [ ] Create `mac-setup/modules/40_git.sh` to set all global git configs, ensure `.gitignore` exists, and check `/etc/git/hooks`.
+
+11. **Add GitHub CLI Installation**
+    11.1. [ ] Ensure `gh` is included in the Homebrew formulae in `00_homebrew.sh` (already present, but verify).
+
+12. **Add GitHub Authentication to Interactive Script**
+    12.1. [ ] Add a step to `mac-setup/setup-interactive.sh` to run `gh auth login` if not already authenticated.
+
+13. **Split Dotfiles Module into Submodules**
+    13.1. [ ] Create `mac-setup/modules/30_dotfiles-clone.sh` to clone the dotfiles repo if not present.
+    13.2. [ ] Create `mac-setup/modules/31_dotfiles-install.sh` to run `install.sh` from `.dotfiles` if present and executable.
+    13.3. [ ] Create `mac-setup/modules/32_nvim-config.sh` to clone Neovim config if not present.
+    13.4. [ ] Create `mac-setup/modules/33_gitignore-global.sh` to set up global gitignore if `.gitignore_global` exists.
+    13.5. [ ] Remove logic from `30_dotfiles.sh` and leave a comment indicating the split.
+
+---
+
 ## Nice to Have
 
-10. **Implement Testing**
-    10.1. [ ] Add `bats-core` as a git submodule or download it into the `mac-setup/tests/` directory.
-    10.2. [ ] Create a `mac-setup/tests/test_runner.sh` to execute all tests.
-    10.3. [ ] Write a basic test file (e.g., `mac-setup/tests/test_tmux.sh`) to verify the `tmux` module's functionality.
+14. **Implement Testing**
+    14.1. [ ] Add `bats-core` as a git submodule or download it into the `mac-setup/tests/` directory.
+    14.2. [ ] Create a `mac-setup/tests/test_runner.sh` to execute all tests.
+    14.3. [ ] Write a basic test file (e.g., `mac-setup/tests/test_tmux.sh`) to verify the `tmux` module's functionality.
 
-11. **Final Cleanup**
-    11.1. [ ] Remove all the old Ansible-related files and directories (`ansible_run`, `install_ansible`, `inventory`, `main.yml`, `tasks/`, `vars.yml`).
-    11.2. [ ] Move the new `mac-setup` contents to the root of the project.
-    11.3. [ ] Delete the `prd.md` and `generate-tasks.mdc` files.
+15. **Final Cleanup**
+    15.1. [ ] Remove all the old Ansible-related files and directories (`ansible_run`, `install_ansible`, `inventory`, `main.yml`, `tasks/`, `vars.yml`).
+    15.2. [ ] Move the new `mac-setup` contents to the root of the project.
+    15.3. [ ] Delete the `prd.md` and `generate-tasks.mdc` files.
 
-12. **Implement the `--force` Flag**
-    12.1. [ ] Implement the `--force` flag to allow re-running a module.
+16. **Implement the `--force` Flag**
+    16.1. [ ] Implement the `--force` flag to allow re-running a module.
 
 ---
 
 ## Relevant Files
 
-- `mac-setup/` (directory): Root directory for the new setup system.
-- `mac-setup/.gitignore`: Ignores user config and local files.
-- `mac-setup/lib/utils.sh`: Utility functions for logging and command checks.
-- `mac-setup/setup.sh`: Main orchestrator script for running unattended setup modules.
-- `mac-setup/setup-interactive.sh`: Script for running interactive steps.
-- `mac-setup/modules/00_homebrew.sh`: Installs Homebrew and all required formulae/casks/taps (idempotent, full coverage; now includes bat, fd, rg, git-delta).
-- `mac-setup/modules/10_zsh.sh`: Installs Zsh, Oh-My-Zsh, and plugins (idempotent, no chsh).
-- `mac-setup/modules/20_tmux.sh`: Installs and configures tmux and TPM (idempotent).
-- `mac-setup/config.sh.example`: Example user config file.
-- `mac-setup/config.sh`: User-specific config (git-ignored).
-- `mac-setup/tests/`: Directory for BATS and other test scripts.
-- `mac-setup/README.md`: Project documentation.
-- `tasks/homebrew.yml`: Legacy Ansible file with required Homebrew packages.
+- `mac-setup/modules/40_git.sh`: Handles all global git configuration and setup.
+- `mac-setup/modules/30_dotfiles-clone.sh`: Clones the dotfiles repo if not present.
+- `mac-setup/modules/31_dotfiles-install.sh`: Runs `install.sh` from `.dotfiles` if present and executable.
+- `mac-setup/modules/32_nvim-config.sh`: Clones Neovim config if not present.
+- `mac-setup/modules/33_gitignore-global.sh`: Sets up global gitignore if `.gitignore_global` exists.
+- `mac-setup/modules/30_dotfiles.sh`: Legacy module, now split into submodules.
+- `mac-setup/setup-interactive.sh`: Script for running interactive steps, now includes GitHub authentication.
+- `mac-setup/modules/00_homebrew.sh`: Installs Homebrew and all required formulae/casks/taps (verify `gh` is present).
 
 ---
 
