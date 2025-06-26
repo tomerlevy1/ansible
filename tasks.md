@@ -37,20 +37,20 @@
         - **Formulae:** bat, commitizen, espanso, eza, fd, fnm, fzf, gh, git, git-delta, jq, lazygit, less, neovim, rg, ripgrep, sketchybar, skhd, starship, stow, tldr, tmux, tree, yabai, yq, z, zsh, zsh-autosuggestions, zsh-history-substring-search, zsh-syntax-highlighting
     6.2. [x] Update `mac-setup/modules/00_homebrew.sh` to install all required formulae, casks, and taps.
     6.3. [x] Implement logic to compare the required list against the output of `brew list` and `brew list --cask` to ensure completeness.
-    6.4. [ ] Ensure the script is idempotent and logs any missing or extra packages.
-    6.5. [ ] Test the updated script for idempotency and completeness.
+    6.4. [x] Ensure the script is idempotent and logs any missing or extra packages.
+    6.5. [x] Test the updated script for idempotency and completeness.
 
 7. **Set Up Configuration Management**
-    7.1. [ ] Create `mac-setup/config.sh.example` with commented-out examples of variables.
+    7.1. [x] Create `mac-setup/config.sh.example` with commented-out examples of variables.
 
 8. **Create Interactive Setup Script** [x]
     8.1. [x] Create `mac-setup/setup-interactive.sh` for all interactive steps (e.g., chsh, SSH key generation).
     8.2. [x] Add logic to perform interactive steps with clear user prompts and instructions.
 
 9. **Create Documentation**
-    9.1. [ ] Create a comprehensive `mac-setup/README.md`.
-    9.2. [ ] Document the project's purpose, how to run the unattended and interactive setup scripts, and how to use features like selective execution and the `config.sh` file.
-    9.3. [ ] Add a guide for developers on how to create a new module and how to decide if a step belongs in the unattended or interactive script.
+    9.1. [x] Create a comprehensive `mac-setup/README.md`.
+    9.2. [x] Document the project's purpose, how to run the unattended and interactive setup scripts, and how to use features like selective execution and the `config.sh` file.
+    9.3. [x] Add a guide for developers on how to create a new module and how to decide if a step belongs in the unattended or interactive script.
 
 ---
 
@@ -123,7 +123,7 @@
   - [x] 6.2 Add Ghostty to the Homebrew casks list: `brew install --cask ghostty`
   - [x] 6.3 Update documentation and package lists as needed
 
-- [ ] 7.0 Add new Homebrew casks
-  - [ ] 7.1 Use brew to install obsidian
-  - [ ] 7.2 Use brew to install chrome
-  - [ ] 7.3 Use brew to install mysqlworkbench 
+- [x] 7.0 Add new Homebrew casks
+  - [x] 7.1 Use brew to install obsidian
+  - [x] 7.2 Use brew to install chrome
+  - [x] 7.3 Use brew to install mysqlworkbench 

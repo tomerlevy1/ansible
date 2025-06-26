@@ -4,6 +4,16 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source "$SCRIPT_DIR/lib/utils.sh"
 
+# Ensure Xcode Command Line Tools are installed
+if ! xcode-select -p &>/dev/null; then
+  log_info "Installing Xcode Command Line Tools..."
+  xcode-select --install
+  log_success "Xcode Command Line Tools installation triggered. Please follow the prompts."
+else
+  log_success "Xcode Command Line Tools are already installed."
+  log_warn "To update Xcode Command Line Tools, use Software Update or reinstall manually if needed. (This cannot be done automatically by the script.)"
+fi
+
 # Required taps, casks, and formulae
 TAPS=(
   homebrew/cask-fonts

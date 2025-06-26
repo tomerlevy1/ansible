@@ -40,6 +40,15 @@
 
 ---
 
+## Xcode Command Line Tools
+
+- **Required for Homebrew and many development tools.**
+- The setup will check for Xcode Command Line Tools and trigger installation if missing.
+- **Updating:** macOS does not provide a direct CLI update for these tools. To update, use **Software Update** or reinstall manually if needed.
+- If you see a warning about updating, follow the instructions in System Preferences > Software Update.
+
+---
+
 ## Configuration
 
 - **config.sh.example:** Shows all available configuration variables. Copy to `config.sh` and edit as needed.
