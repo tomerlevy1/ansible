@@ -2,9 +2,36 @@
 
 # Main orchestrator script for mac-setup
 
-# Source utility functions
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Set up log directory and log file
+LOG_DIR="$SCRIPT_DIR/log"
+mkdir -p "$LOG_DIR"
+
+# Determine type of execution for log file name
+if [ $# -eq 0 ]; then
+  EXEC_TYPE="full"
+else
+  EXEC_TYPE="${1}"
+fi
+LOG_TIMESTAMP="$(date '+%Y-%m-%d-%H%M%S')"
+LOG_FILE="$LOG_DIR/${LOG_TIMESTAMP}-${EXEC_TYPE}.log"
+
+# Try to create the log file
+if ! touch "$LOG_FILE" 2>/dev/null; then
+  echo "[ERROR] Failed to create log file: $LOG_FILE" >&2
+  exit 1
+fi
+
+# Export log file path for use in logging functions
+export MAC_SETUP_LOG_FILE="$LOG_FILE"
+
+# Source utility functions
 source "$SCRIPT_DIR/lib/utils.sh"
+
+# Trap errors and abnormal exits to log them
+trap 'log_error "Script terminated unexpectedly (exit code $?)"' ERR
+trap 'log_info "Setup script exited (exit code $?)"' EXIT
 
 # Source user config if it exists
 CONFIG_FILE="$SCRIPT_DIR/config.sh"

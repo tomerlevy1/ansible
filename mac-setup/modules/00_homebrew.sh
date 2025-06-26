@@ -20,6 +20,7 @@ TAPS=(
     koekeishiya/formulae
     FelixKratz/formulae
     espanso/espanso
+    cirruslabs/cli
 )
 CASKS=(
     font-jetbrains-mono-nerd-font
