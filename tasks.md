@@ -113,4 +113,5 @@
 - chore(homebrew): add bat, fd, rg, and git-delta to required formulae
 - feat(tmux): add TPM installation to tmux module
 - feat(zsh): ensure only zsh-fzf-history-search, zsh-syntax-highlighting, and zsh-autosuggestions plugins are installed
-- docs(zsh): warn if /opt/homebrew/bin/zsh is not found 
+- docs(zsh): warn if /opt/homebrew/bin/zsh is not found
+- refactor(modules): ensure all modules are idempotent and skip if already installed 
