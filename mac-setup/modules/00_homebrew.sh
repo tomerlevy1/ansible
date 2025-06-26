@@ -15,6 +15,7 @@ CASKS=(
   font-jetbrains-mono-nerd-font
   maccy
   karabiner-elements
+  ghostty
 )
 FORMULAE=(
   bat

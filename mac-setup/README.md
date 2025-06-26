@@ -72,6 +72,7 @@
   - font-jetbrains-mono-nerd-font
   - maccy
   - karabiner-elements
+  - ghostty
 - **Formulae:**
   - bat, commitizen, espanso, eza, fd, fnm, fzf, gh, git, git-delta, jq, lazygit, less, neovim, ripgrep, sketchybar, skhd, starship, stow, tldr, tmux, tree, yabai, yq, zoxide, zsh, zsh-autosuggestions, zsh-history-substring-search, zsh-syntax-highlighting
 

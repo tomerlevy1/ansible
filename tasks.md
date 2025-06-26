@@ -114,4 +114,16 @@
 - feat(tmux): add TPM installation to tmux module
 - feat(zsh): ensure only zsh-fzf-history-search, zsh-syntax-highlighting, and zsh-autosuggestions plugins are installed
 - docs(zsh): warn if /opt/homebrew/bin/zsh is not found
-- refactor(modules): ensure all modules are idempotent and skip if already installed 
+- refactor(modules): ensure all modules are idempotent and skip if already installed
+
+## New/Upcoming Tasks
+
+- [x] 6.0 Replace Alacritty with Ghostty
+  - [x] 6.1 Remove Alacritty from the Homebrew casks list in `00_homebrew.sh` (if present)
+  - [x] 6.2 Add Ghostty to the Homebrew casks list: `brew install --cask ghostty`
+  - [x] 6.3 Update documentation and package lists as needed
+
+- [ ] 7.0 Add new Homebrew casks
+  - [ ] 7.1 Use brew to install obsidian
+  - [ ] 7.2 Use brew to install chrome
+  - [ ] 7.3 Use brew to install mysqlworkbench 
