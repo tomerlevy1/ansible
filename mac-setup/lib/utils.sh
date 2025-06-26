@@ -4,6 +4,7 @@
 BLUE='\033[1;34m'
 GREEN='\033[1;32m'
 RED='\033[1;31m'
+YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 log_info() {
@@ -12,6 +13,10 @@ log_info() {
 
 log_success() {
   echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+log_warn() {
+  echo -e "${YELLOW}[WARN]${NC} $1" >&2
 }
 
 log_error() {
