@@ -23,6 +23,7 @@ TAPS=(
 )
 CASKS=(
     font-jetbrains-mono-nerd-font
+    font-0xproto-nerd-font
     maccy
     karabiner-elements
     ghostty
