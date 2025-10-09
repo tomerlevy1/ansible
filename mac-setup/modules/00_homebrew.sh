@@ -34,6 +34,7 @@ CASKS=(
 )
 FORMULAE=(
     bat
+    btop
     cirruslabs/cli/tart
     commitizen
     espanso
